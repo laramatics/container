@@ -13,7 +13,7 @@ WORKDIR /var/www/html
 RUN addgroup -g ${GROUP_ID} deployer
 RUN adduser -DHS -u ${USER_ID} -G deployer deployer
 RUN echo 'deployer ALL=(ALL) ALL' > /etc/sudoers
-RUN mkdir /etc/sudoers.d/ && echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
+RUN mkdir /etc/sudoers.d/ && echo 'wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
 RUN adduser deployer wheel
 
 # Copy PHP Extension Installer (https://github.com/mlocati/docker-php-extension-installer)
