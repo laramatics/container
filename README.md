@@ -63,10 +63,16 @@ git clone https://github.com/laramatics/app.git
 cd app
 # modify files...
 docker build \
+  --build-args USER_ID=1235
+  --build-args GROUP_ID=1235
   --build-arg PHP_VERSION=8.0.1 \
   --build-arg COMPOSER_VERSION=2 \
   -t <image_name> .
 ```
+
+***Note:*** By default `deployer` user inside container will use `uid` of `1235`, you can change that to match your own
+environment, the username doesn't matter, once you bind `/var/www/html` to docker host, the only thing that matters
+is `uid` and `gid`.
 
 ### Adding more PHP extensions
 
@@ -102,6 +108,28 @@ modifying source files and building your own image, run:
 
 ```shell
 GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
+```
+
+## Using
+
+Using the image is straight-forward and easy, create a `Dockerfile` in your app and copy your files into the container,
+do whatever is necessary:
+
+```dockerfile
+FROM laramatics/app:latest
+
+# copy your own configurations to the container
+COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-app.ini"
+
+# copy app to the container
+COPY ./ /var/www/html
+RUN chown -R $USER_ID:$USER_GROUP /var/www/html
+```
+
+Once your files are added to the container, you will have to build an image from your `Dockerfile`:
+
+```bash
+docker build -t <image_name> .
 ```
 
 # References
