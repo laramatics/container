@@ -16,4 +16,6 @@ apk add --update --no-cache \
   freetype-dev \
   mysql-client \
   libwebp-dev \
-  icu-dev
+  icu-dev \
+  su-exec \
+  openrc

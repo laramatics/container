@@ -18,3 +18,6 @@ docker-php-ext-configure opcache --enable-opcache &&
 
 # note: for some reason if we build gd with the rest of the extensions it will trow an error in php -v
 docker-php-ext-install -j "$(nproc)" gd
+
+# Enable production environment
+mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
