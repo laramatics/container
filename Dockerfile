@@ -12,7 +12,7 @@ ENV GROUP_ID=${GROUP_ID}
 WORKDIR /var/www/html
 RUN addgroup -g ${GROUP_ID} deployer
 RUN adduser -DHS -u ${USER_ID} -G deployer deployer
-RUN echo 'deployer ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/deployer
+RUN mkdir /etc/sudoers.d/ && echo 'deployer ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/deployer
 #RUN mkdir /etc/sudoers.d/ && echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
 RUN adduser deployer wheel
 
