@@ -3,5 +3,5 @@
 if [ $# -gt 0 ]; then
   exec su-exec $USER_ID:$GROUP_ID "$@"
 else
-  exec su-exec $USER_ID:$GROUP_ID /usr/local/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80
+  exec su-exec $USER_ID:$GROUP_ID sudo /usr/local/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80
 fi

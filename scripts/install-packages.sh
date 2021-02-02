@@ -14,4 +14,5 @@ apk add --update --no-cache \
   mysql-client \
   libwebp-dev \
   icu-dev \
-  su-exec
+  su-exec \
+  sudo

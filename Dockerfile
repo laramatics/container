@@ -11,8 +11,8 @@ ENV GROUP_ID=${GROUP_ID}
 # Setting up
 WORKDIR /var/www/html
 RUN addgroup -g ${GROUP_ID} deployer
-RUN adduser -DHS -u ${USER_ID} -G deployer -G wheel deployer
-RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
+RUN adduser -DHS -u ${USER_ID} -G deployer deployer
+echo 'deployer ALL=(ALL) ALL' > /etc/sudoers
 
 # Copy PHP Extension Installer (https://github.com/mlocati/docker-php-extension-installer)
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
