@@ -1,6 +1,6 @@
 <div align="center">
 
-# Laravel App
+# Laravel App Container
 
 ![GitHub](https://img.shields.io/github/license/laramatics/app)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/laramatics/app/latest)
@@ -18,6 +18,7 @@ for serving your Laravel app.
 
 ### Table of Contents
 
+- [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Packages and Services](#packages-and-services)
     - [Customizing build versions](#customizing-build-versions)
@@ -25,6 +26,30 @@ for serving your Laravel app.
     - [Adding more packages](#adding-more-packages)
     - [Testing](#testing)
 - [References](#references)
+
+## Usage
+
+Using the image is straight-forward and easy to use, create a `Dockerfile` in your app and copy your files into the
+container, do whatever is necessary:
+
+```dockerfile
+FROM laramatics/app:latest
+
+# (optional) copy your own configurations to the container
+COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-app.ini"
+
+# copy app to the container
+COPY ./ /var/www/html
+RUN chown -R $USER_ID:$USER_GROUP /var/www/html
+```
+
+Once your files are added to the container, you will have to build an image from your `Dockerfile`:
+
+```bash
+docker build -t <image_name> .
+```
+
+All done! run your container and enjoy!
 
 ## Folder Structure
 
@@ -38,7 +63,8 @@ Although folder structure is self-explanatory, description is as below:
 ├── scripts
 │   ├── cleanup.sh            # removes build dependencies for lighter image size.
 │   ├── install-packages.sh   # OS packages will be installed by this file.
-│   └── install-php.sh        # php extensions and installation.
+│   ├── install-php.sh        # php extensions and installation.
+│   └── start-container       # container entry-point script
 └── tests
     └── goss.yaml             # see "testing" section
 ```
@@ -70,9 +96,9 @@ docker build \
   -t <image_name> .
 ```
 
-***Note:*** By default `deployer` user inside container will use `uid` of `1235`, you can change that to match your own
-environment, the username doesn't matter, once you bind `/var/www/html` to docker host, the only thing that matters
-is `uid` and `gid`.
+***Note:*** By default `deployer` user inside the container will use `uid` and `gid` of `1235`, you can change that to
+match your own setup, the username doesn't matter, once you bind `/var/www/html` to your docker host, the only thing
+that matters is `uid` and `gid` of the files (that's how linux works).
 
 ### Adding more PHP extensions
 
@@ -110,28 +136,6 @@ modifying source files and building your own image, run:
 GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 ```
 
-## Using
-
-Using the image is straight-forward and easy, create a `Dockerfile` in your app and copy your files into the container,
-do whatever is necessary:
-
-```dockerfile
-FROM laramatics/app:latest
-
-# copy your own configurations to the container
-COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-app.ini"
-
-# copy app to the container
-COPY ./ /var/www/html
-RUN chown -R $USER_ID:$USER_GROUP /var/www/html
-```
-
-Once your files are added to the container, you will have to build an image from your `Dockerfile`:
-
-```bash
-docker build -t <image_name> .
-```
-
 # References
 
-- [Useful issue](https://github.com/docker-library/php/issues/1049)
+- [Useful gist](https://gist.github.com/avishayp/33fcee06ee440524d21600e2e817b6b7)
