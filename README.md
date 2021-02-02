@@ -52,11 +52,6 @@ are installed.
 |---|:---:|:---:|
 |PHP|8.0.1|`PHP_VERSION`|
 |Composer|2.0.9|`COMPOSER_VERSION`|
-|Node|15.7.0|`NODE_VERSION`|
-|NPM|7.5.1|`NPM_VERSION`|
-|[reg](https://github.com/genuinetools/reg)|latest|`N/A`|
-|[cfcli](https://github.com/danielpigott/cloudflare-cli)|latest|`N/A`|
-|[local-php-security-checker](https://github.com/fabpot/local-php-security-checker)|latest|`N/A`|
 
 ### Customizing build versions
 
@@ -68,8 +63,8 @@ git clone https://github.com/laramatics/app.git
 cd app
 # modify files...
 docker build \
-  --build-arg NPM_VERSION=7.5.1 \
   --build-arg PHP_VERSION=8.0.1 \
+  --build-arg COMPOSER_VERSION=2 \
   -t <image_name> .
 ```
 
@@ -106,7 +101,7 @@ Tests are written using [GOSS](https://github.com/aelsabbahy/goss/tree/master/ex
 modifying source files and building your own image, run:
 
 ```shell
-GOSS_FILES_PATH=tests dgoss run --rm -it <image_name>
+GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 ```
 
 # References
