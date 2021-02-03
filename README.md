@@ -21,10 +21,10 @@ for serving your Laravel app.
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Packages and Services](#packages-and-services)
-    - [Customizing build versions](#customizing-build-versions)
-    - [Adding more PHP extensions](#adding-more-php-extensions)
-    - [Adding more packages](#adding-more-packages)
-    - [Testing](#testing)
+  - [Customizing build versions](#customizing-build-versions)
+  - [Adding more PHP extensions](#adding-more-php-extensions)
+  - [Adding more packages](#adding-more-packages)
+  - [Testing](#testing)
 - [References](#references)
 
 ## Usage
@@ -53,7 +53,7 @@ All done! run your container and enjoy!
 
 ## Folder Structure
 
-Although folder structure is self-explanatory, description is as below:
+Although folder structure is self-explanatory, description is below:
 
 ```
 .
@@ -61,17 +61,17 @@ Although folder structure is self-explanatory, description is as below:
 ├── LICENSE
 ├── readme.md
 ├── scripts
-│   ├── cleanup.sh            # removes build dependencies for lighter image size.
+│   ├── cleanup.sh            # Removes build dependencies for lighter image size.
 │   ├── install-packages.sh   # OS packages will be installed by this file.
-│   ├── install-php.sh        # php extensions and installation.
-│   └── start-container       # container entry-point script
+│   ├── install-php.sh        # PHP extensions and installation.
+│   └── start-container       # Container entry-point script
 └── tests
-    └── goss.yaml             # see "testing" section
+    └── goss.yaml             # See "testing" section
 ```
 
 ## Packages and Services
 
-We created the `Dockerfile` with image size in mind, so only packages and PHP extensions which is absolutely necessary
+We created the `Dockerfile` with image size in mind, so only packages and PHP extensions which are absolutely necessary
 are installed.
 
 |Service|Version|Argument|
@@ -81,13 +81,13 @@ are installed.
 
 ### Customizing build versions
 
-As you can see in the table above, some services has an argument in `Dockerfile` for you to modify installation version,
-to do that, you need to clone the repo and build the image yourself:
+As you can see in the table above, some services have an argument in `Dockerfile` for you to modify the installation version.
+To do so, you need to clone the repo and build the image yourself:
 
 ```bash
 git clone https://github.com/laramatics/app.git
 cd app
-# modify files...
+# Modify files...
 docker build \
   --build-args USER_ID=1235
   --build-args GROUP_ID=1235
@@ -106,8 +106,8 @@ If you want to add more extensions to the PHP installation, you will have to bui
 already built or modify the `Dockerfile` and `scripts/*` to your liking and build your own image from that as
 described [here](#adding-more-packages).
 
-see [Docker PHP Extension Installer](https://github.com/mlocati/docker-php-extension-installer)
-for available extensions, although you can install them fom source if you will.
+See [Docker PHP Extension Installer](https://github.com/mlocati/docker-php-extension-installer)
+for available extensions, however you can also install them from the source.
 
 ```dockerfile
 FROM laramatics/app:latest
@@ -123,7 +123,7 @@ image from `laramatics/app` or clone this repo and modify files to suit your nee
 ```shell
 git clone https://github.com/laramatics/app.git
 cd app
-# modify files...
+# Modify files...
 docker build -t <image_name> .
 ```
 
