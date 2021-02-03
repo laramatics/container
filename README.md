@@ -21,10 +21,10 @@ for serving your Laravel app.
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Packages and Services](#packages-and-services)
-    - [Customizing build versions](#customizing-build-versions)
-    - [Adding more PHP extensions](#adding-more-php-extensions)
-    - [Adding more packages](#adding-more-packages)
-    - [Testing](#testing)
+  - [Customizing build versions](#customizing-build-versions)
+  - [Adding more PHP extensions](#adding-more-php-extensions)
+  - [Adding more packages](#adding-more-packages)
+  - [Testing](#testing)
 - [References](#references)
 
 ## Usage
