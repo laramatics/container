@@ -2,18 +2,18 @@
 
 # Laravel App Container
 
-![GitHub](https://img.shields.io/github/license/laramatics/app)
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/laramatics/app/latest)
-![Docker Pulls](https://img.shields.io/docker/pulls/laramatics/app)
-![Docker Image Version (latest semver)](https://img.shields.io/docker/v/laramatics/app)
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/laramatics/app)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/laramatics/app)
+![GitHub](https://img.shields.io/github/license/laramatics/container)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/laramatics/container/latest)
+![Docker Pulls](https://img.shields.io/docker/pulls/laramatics/container)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/laramatics/container)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/laramatics/container)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/laramatics/container)
 
 </div>
 
 ## About
 
-This repository contains a `Dockerfile` which builds an [image](https://hub.docker.com/r/laramatics/app)
+This repository contains a `Dockerfile` which builds an [image](https://hub.docker.com/r/laramatics/container)
 for serving your Laravel app.
 
 ### Table of Contents
@@ -21,10 +21,10 @@ for serving your Laravel app.
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Packages and Services](#packages-and-services)
-  - [Customizing build versions](#customizing-build-versions)
-  - [Adding more PHP extensions](#adding-more-php-extensions)
-  - [Adding more packages](#adding-more-packages)
-  - [Testing](#testing)
+    - [Customizing build versions](#customizing-build-versions)
+    - [Adding more PHP extensions](#adding-more-php-extensions)
+    - [Adding more packages](#adding-more-packages)
+    - [Testing](#testing)
 - [References](#references)
 
 ## Usage
@@ -33,10 +33,10 @@ Using the image is straight-forward and easy to use, create a `Dockerfile` in yo
 container, do whatever is necessary:
 
 ```dockerfile
-FROM laramatics/app:latest
+FROM laramatics/container:latest
 
 # (optional) copy your own configurations to the container
-COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-app.ini"
+COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-container.ini"
 
 # copy app to the container
 COPY ./ /var/www/html
@@ -81,11 +81,11 @@ are installed.
 
 ### Customizing build versions
 
-As you can see in the table above, some services have an argument in `Dockerfile` for you to modify the installation version.
-To do so, you need to clone the repo and build the image yourself:
+As you can see in the table above, some services have an argument in `Dockerfile` for you to modify the installation
+version. To do so, you need to clone the repo and build the image yourself:
 
 ```bash
-git clone https://github.com/laramatics/app.git
+git clone https://github.com/laramatics/container.git
 cd app
 # Modify files...
 docker build \
@@ -110,7 +110,7 @@ See [Docker PHP Extension Installer](https://github.com/mlocati/docker-php-exten
 for available extensions, however you can also install them from the source.
 
 ```dockerfile
-FROM laramatics/app:latest
+FROM laramatics/container:latest
 # add your extentions here...
 RUN docker-php-ext-install -j "$(nproc)" <package_name>
 ```
@@ -118,10 +118,10 @@ RUN docker-php-ext-install -j "$(nproc)" <package_name>
 ### Adding more packages
 
 Sometimes you need a specific package for your pipeline; as described in the previous section, you can build your own
-image from `laramatics/app` or clone this repo and modify files to suit your needs.
+image from `laramatics/container` or clone this repo and modify files to suit your needs.
 
 ```shell
-git clone https://github.com/laramatics/app.git
+git clone https://github.com/laramatics/container.git
 cd app
 # Modify files...
 docker build -t <image_name> .
