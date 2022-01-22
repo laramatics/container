@@ -25,7 +25,6 @@ for serving your Laravel app.
     - [Adding more PHP extensions](#adding-more-php-extensions)
     - [Adding more packages](#adding-more-packages)
     - [Testing](#testing)
-- [References](#references)
 
 ## Usage
 
@@ -40,6 +39,9 @@ COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-container.ini"
 
 # (optional) override default nginx configuration file
 COPY /docker/config/your_nginx_cnf.conf /etc/nginx/http.d/default.conf
+
+# (optional) add a supervisor configuration file for your workers
+COPY /docker/config/myapp.conf /etc/supervisor.d/myapp.conf
 
 # copy app to the container
 COPY ./ /var/www/html
