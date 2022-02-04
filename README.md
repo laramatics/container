@@ -25,7 +25,6 @@ for serving your Laravel app.
     - [Adding more PHP extensions](#adding-more-php-extensions)
     - [Adding more packages](#adding-more-packages)
     - [Testing](#testing)
-- [References](#references)
 
 ## Usage
 
@@ -38,9 +37,14 @@ FROM laramatics/container:latest
 # (optional) copy your own configurations to the container
 COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-container.ini"
 
+# (optional) override default nginx configuration file
+COPY /docker/config/your_nginx_cnf.conf /etc/nginx/http.d/default.conf
+
+# (optional) add a supervisor configuration file for your workers
+COPY /docker/config/myapp.conf /etc/supervisor.d/myapp.conf
+
 # copy app to the container
 COPY ./ /var/www/html
-RUN chown -R $USER_ID:$USER_GROUP /var/www/html
 ```
 
 Once your files are added to the container, you will have to build an image from your `Dockerfile`:
@@ -57,6 +61,9 @@ Although folder structure is self-explanatory, description is below:
 
 ```
 .
+├── configs
+│   ├── nginx.conf            # default nginx configuration file.
+│   └── supervisord.conf      # php/nginx supervisor configuration file.
 ├── Dockerfile
 ├── LICENSE
 ├── readme.md
@@ -64,9 +71,9 @@ Although folder structure is self-explanatory, description is below:
 │   ├── cleanup.sh            # Removes build dependencies for lighter image size.
 │   ├── install-packages.sh   # OS packages will be installed by this file.
 │   ├── install-php.sh        # PHP extensions and installation.
-│   └── start-container       # Container entry-point script
+│   └── start-container       # Container entry-point script.
 └── tests
-    └── goss.yaml             # See "testing" section
+    └── goss.yaml             # See "testing" section.
 ```
 
 ## Packages and Services
@@ -76,8 +83,9 @@ are installed.
 
 |Service|Version|Argument|
 |---|:---:|:---:|
-|PHP|8.0.1|`PHP_VERSION`|
-|Composer|2.0.9|`COMPOSER_VERSION`|
+|PHP|8.1.1|`PHP_VERSION`|
+|nginx|latest|`N/A`|
+|supervisor|latest|`N/A`|
 
 ### Customizing build versions
 
@@ -89,16 +97,9 @@ git clone https://github.com/laramatics/container.git
 cd app
 # Modify files...
 docker build \
-  --build-args USER_ID=1235
-  --build-args GROUP_ID=1235
-  --build-arg PHP_VERSION=8.0.1 \
-  --build-arg COMPOSER_VERSION=2 \
+  --build-arg PHP_VERSION=8.1.1 \
   -t <image_name> .
 ```
-
-***Note:*** By default `deployer` user inside the container will use `uid` and `gid` of `1235`, you can change that to
-match your own setup, the username doesn't matter, once you bind `/var/www/html` to your docker host, the only thing
-that matters is `uid` and `gid` of the files (that's how linux works).
 
 ### Adding more PHP extensions
 
@@ -135,7 +136,3 @@ modifying source files and building your own image, run:
 ```shell
 GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 ```
-
-# References
-
-- [Useful gist](https://gist.github.com/avishayp/33fcee06ee440524d21600e2e817b6b7)

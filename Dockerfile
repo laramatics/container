@@ -1,31 +1,30 @@
-ARG PHP_VERSION=8.0.1
-FROM php:${PHP_VERSION}-alpine
+ARG PHP_VERSION=8.1.1
+FROM php:${PHP_VERSION}-fpm-alpine
 LABEL maintainer="Pezhvak <pezhvak@imvx.org>"
 # NOTE: ARGs before FROM cannot be accessed during build time (https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact)
-ARG COMPOSER_VERSION=2
-ARG USER_ID=1235
-ARG GROUP_ID=1235
-ENV USER_ID=${USER_ID}
-ENV GROUP_ID=${GROUP_ID}
 
-# Setting up
 WORKDIR /var/www/html
-RUN addgroup -g ${GROUP_ID} deployer
-RUN adduser -DHS -u ${USER_ID} -G deployer deployer
-RUN mkdir /etc/sudoers.d/ && echo 'deployer ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/deployer
 
 # Copy PHP Extension Installer (https://github.com/mlocati/docker-php-extension-installer)
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
 
 # Copy Scripts
 COPY scripts /tmp
 RUN chmod +x /tmp/*.sh
 COPY scripts/start-container /usr/local/bin
+COPY scripts/start-crontab /usr/local/bin
 RUN chmod +x /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-crontab
 
 # Install
 RUN ash /tmp/install-packages.sh
 RUN ash /tmp/install-php.sh
+
+# Setting up Supervisor
+RUN sed -i "s/*.ini/*.conf/" /etc/supervisord.conf
+RUN sed -i "s/;pidfile=/pidfile=/" /etc/supervisord.conf
+RUN mkdir /etc/supervisor.d/
 
 # Cleanup
 RUN ash /tmp/cleanup.sh
@@ -33,4 +32,15 @@ RUN rm -rf /tmp/*
 
 # Serving
 EXPOSE 80
+
+# Services supervisor config
+COPY ./configs/supervisord.conf /etc/supervisor.d/supervisord.conf
+
+# Override nginx's default config
+COPY ./configs/default.conf /etc/nginx/http.d/default.conf
+
+# Set crontab configurations
+COPY ./configs/crontab.txt /etc/crontabs/root
+
+CMD ["/usr/bin/supervisord", "-n","-c", "/etc/supervisord.conf"]
 ENTRYPOINT ["start-container"]

@@ -15,4 +15,6 @@ apk add --update --no-cache \
   libwebp-dev \
   icu-dev \
   su-exec \
-  sudo
+  sudo \
+  nginx \
+  supervisor
