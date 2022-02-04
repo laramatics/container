@@ -40,7 +40,7 @@ COPY ./configs/supervisord.conf /etc/supervisor.d/supervisord.conf
 COPY ./configs/nginx.conf /etc/nginx/http.d/default.conf
 
 # Set crontab configurations
-COPY ./configs/crontab.txt /etc/crontabs/root
+COPY ./configs/cron.txt /etc/crontabs/root
 
 CMD ["/usr/bin/supervisord", "-n","-c", "/etc/supervisord.conf"]
 ENTRYPOINT ["start-container"]

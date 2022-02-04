@@ -62,6 +62,7 @@ Although folder structure is self-explanatory, description is below:
 ```
 .
 ├── configs
+│   ├── crontab.txt           # crontab configuration file.
 │   ├── nginx.conf            # default nginx configuration file.
 │   └── supervisord.conf      # php/nginx supervisor configuration file.
 ├── Dockerfile
@@ -72,6 +73,7 @@ Although folder structure is self-explanatory, description is below:
 │   ├── install-packages.sh   # OS packages will be installed by this file.
 │   ├── install-php.sh        # PHP extensions and installation.
 │   └── start-container       # Container entry-point script.
+│   └── start-cron            # Running container with cron job role.
 └── tests
     └── goss.yaml             # See "testing" section.
 ```
