@@ -35,7 +35,7 @@ EXPOSE 80
 COPY ./configs/supervisord.conf /etc/supervisor.d/supervisord.conf
 
 # Override nginx's default config
-COPY ./configs/default.conf /etc/nginx/http.d/default.conf
+COPY ./configs/nginx.conf /etc/nginx/http.d/default.conf
 
 CMD ["/usr/bin/supervisord", "-n","-c", "/etc/supervisord.conf"]
 ENTRYPOINT ["start-container"]
