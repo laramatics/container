@@ -12,10 +12,10 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # Copy Scripts
 COPY scripts /tmp
 RUN chmod +x /tmp/*.sh
-COPY scripts/start-container /usr/local/bin
-COPY scripts/start-cron /usr/local/bin
-RUN chmod +x /usr/local/bin/start-container
-RUN chmod +x /usr/local/bin/start-cron
+COPY scripts/start-container /usr/bin
+COPY scripts/start-cron /usr/bin
+RUN chmod +x /usr/bin/start-container
+RUN chmod +x /usr/bin/start-cron
 
 # Install
 RUN ash /tmp/install-packages.sh
