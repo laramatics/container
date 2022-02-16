@@ -14,8 +14,10 @@ COPY scripts /tmp
 RUN chmod +x /tmp/*.sh
 COPY scripts/start-container /usr/bin
 COPY scripts/start-cron /usr/bin
+COPY scripts/start-worker /usr/bin
 RUN chmod +x /usr/bin/start-container
 RUN chmod +x /usr/bin/start-cron
+RUN chmod +x /usr/bin/start-worker
 
 # Install
 RUN ash /tmp/install-packages.sh
