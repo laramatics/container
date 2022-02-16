@@ -34,7 +34,7 @@ RUN rm -rf /tmp/*
 EXPOSE 80
 
 # Services supervisor config
-COPY ./configs/supervisord.conf /etc/supervisor.d/supervisord.conf
+COPY ./configs/supervisord.conf /etc/supervisor.d/php-nginx.conf
 
 # Override nginx's default config
 COPY ./configs/nginx.conf /etc/nginx/http.d/default.conf
