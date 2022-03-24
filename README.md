@@ -138,3 +138,9 @@ modifying source files and building your own image, run:
 ```shell
 GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 ```
+
+### FAQ
+
+*Q:* How can i change php-fpm port?
+
+*A:* Sometimes you need to change default php-fpm port which is 9000 in order to serve multiple containers under same pod. to do that modify the port in `/usr/local/etc/php-fpm.d/zz-docker.conf`.
