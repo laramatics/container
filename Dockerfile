@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.1.1
+ARG PHP_VERSION=8.2.1
 FROM php:${PHP_VERSION}-fpm-alpine
 LABEL maintainer="Pezhvak <pezhvak@imvx.org>"
 # NOTE: ARGs before FROM cannot be accessed during build time (https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact)
