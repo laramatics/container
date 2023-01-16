@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.1.1
+ARG PHP_VERSION=8.2.1
 FROM php:${PHP_VERSION}-fpm-alpine
 LABEL maintainer="Pezhvak <pezhvak@imvx.org>"
 # NOTE: ARGs before FROM cannot be accessed during build time (https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact)
@@ -12,8 +12,12 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # Copy Scripts
 COPY scripts /tmp
 RUN chmod +x /tmp/*.sh
-COPY scripts/start-container /usr/local/bin
-RUN chmod +x /usr/local/bin/start-container
+COPY scripts/start-container /usr/bin
+COPY scripts/start-cron /usr/bin
+COPY scripts/start-worker /usr/bin
+RUN chmod +x /usr/bin/start-container
+RUN chmod +x /usr/bin/start-cron
+RUN chmod +x /usr/bin/start-worker
 
 # Install
 RUN ash /tmp/install-packages.sh
@@ -32,10 +36,13 @@ RUN rm -rf /tmp/*
 EXPOSE 80
 
 # Services supervisor config
-COPY ./configs/supervisord.conf /etc/supervisor.d/supervisord.conf
+COPY ./configs/supervisord.conf /etc/supervisor.d/php-nginx.conf
 
 # Override nginx's default config
 COPY ./configs/nginx.conf /etc/nginx/http.d/default.conf
+
+# Set crontab configurations
+COPY ./configs/crontab.txt /etc/crontabs/root
 
 CMD ["/usr/bin/supervisord", "-n","-c", "/etc/supervisord.conf"]
 ENTRYPOINT ["start-container"]

@@ -62,6 +62,7 @@ Although folder structure is self-explanatory, description is below:
 ```
 .
 ├── configs
+│   ├── crontab.txt           # crontab configuration file.
 │   ├── nginx.conf            # default nginx configuration file.
 │   └── supervisord.conf      # php/nginx supervisor configuration file.
 ├── Dockerfile
@@ -72,6 +73,7 @@ Although folder structure is self-explanatory, description is below:
 │   ├── install-packages.sh   # OS packages will be installed by this file.
 │   ├── install-php.sh        # PHP extensions and installation.
 │   └── start-container       # Container entry-point script.
+│   └── start-cron            # Running container with cron job role.
 └── tests
     └── goss.yaml             # See "testing" section.
 ```
@@ -136,3 +138,9 @@ modifying source files and building your own image, run:
 ```shell
 GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 ```
+
+### FAQ
+
+*Q:* How can i change php-fpm port?
+
+*A:* Sometimes you need to change default php-fpm port which is 9000 in order to serve multiple containers under same pod. to do that modify the port in `/usr/local/etc/php-fpm.d/zz-docker.conf`.
