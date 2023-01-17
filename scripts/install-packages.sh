@@ -3,6 +3,7 @@ apk --update add --no-cache --virtual .build-deps \
   gnupg \
   zlib-dev \
   libjpeg-turbo-dev \
+  freetype-dev \
   libpng-dev \
   libxml2-dev \
   bzip2-dev \
@@ -10,7 +11,8 @@ apk --update add --no-cache --virtual .build-deps \
 
 # Add Production Dependencies
 apk add --update --no-cache \
-  freetype-dev \
+  libpng \
+  freetype \
   mysql-client \
   libwebp-dev \
   icu-dev \
