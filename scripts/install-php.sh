@@ -19,7 +19,7 @@ docker-php-ext-install -j "$(nproc)" gd
 docker-php-ext-install -j "$(nproc)" intl
 
 # installing redis
-RUN pecl install redis && docker-php-ext-enable redis
+pecl install redis && docker-php-ext-enable redis
 
 # Enable production environment
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
