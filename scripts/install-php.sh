@@ -16,10 +16,7 @@ docker-php-ext-configure opcache --enable-opcache &&
 
 # note: for some reason if we build gd,intl with the rest of the extensions it will trow an error in php -v
 docker-php-ext-install -j "$(nproc)" gd
-docker-php-ext-install -j "$(nproc)" intl
-
-# installing redis
-pecl install redis && docker-php-ext-enable redis
+install-php-extensions redis
 
 # Enable production environment
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
