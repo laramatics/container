@@ -13,6 +13,7 @@ apk --update add --no-cache --virtual .build-deps \
 apk add --update --no-cache \
   libpng \
   freetype \
+  libjpeg-turbo \
   mysql-client \
   libwebp-dev \
   icu-dev \
