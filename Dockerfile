@@ -15,9 +15,11 @@ RUN chmod +x /tmp/*.sh
 COPY scripts/start-container /usr/bin
 COPY scripts/start-cron /usr/bin
 COPY scripts/start-worker /usr/bin
+COPY scripts/start-supervisor /usr/bin
 RUN chmod +x /usr/bin/start-container
 RUN chmod +x /usr/bin/start-cron
 RUN chmod +x /usr/bin/start-worker
+RUN chmod +x /usr/bin/start-supervisor
 
 # Install
 RUN ash /tmp/install-packages.sh
@@ -27,6 +29,7 @@ RUN ash /tmp/install-php.sh
 RUN sed -i "s/*.ini/*.conf/" /etc/supervisord.conf
 RUN sed -i "s/;pidfile=/pidfile=/" /etc/supervisord.conf
 RUN mkdir /etc/supervisor.d/
+RUN mkdir /etc/supervisor.conf/
 
 # Cleanup
 RUN ash /tmp/cleanup.sh

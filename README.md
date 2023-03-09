@@ -41,6 +41,9 @@ COPY /docker/config/php.ini "$PHP_INI_DIR/conf.d/laramatics-container.ini"
 COPY /docker/config/your_nginx_cnf.conf /etc/nginx/http.d/default.conf
 
 # (optional) add a supervisor configuration file for your workers
+COPY /docker/config/myapp.conf /etc/supervisor.conf/myapp.conf
+
+# (optional) if you want it to run on all start scripts then add it here
 COPY /docker/config/myapp.conf /etc/supervisor.d/myapp.conf
 
 # copy app to the container
@@ -74,8 +77,10 @@ Although folder structure is self-explanatory, description is below:
 │   ├── install-php.sh        # PHP extensions and installation.
 │   └── start-container       # Container entry-point script.
 │   └── start-cron            # Running container with cron job role.
+│   └── start-worker          # Running container with artisan worker role.
+│   └── start-supervisor      # Running container with supervisor role.
 └── tests
-    └── goss.yaml             # See "testing" section.
+    └── goss.yaml                   # See "testing" section.
 ```
 
 ## Packages and Services
@@ -83,11 +88,11 @@ Although folder structure is self-explanatory, description is below:
 We created the `Dockerfile` with image size in mind, so only packages and PHP extensions which are absolutely necessary
 are installed.
 
-|Service|Version|Argument|
-|---|:---:|:---:|
-|PHP|8.1.1|`PHP_VERSION`|
-|nginx|latest|`N/A`|
-|supervisor|latest|`N/A`|
+|Service| Version |Argument|
+|---|:-------:|:---:|
+|PHP|  8.2.1  |`PHP_VERSION`|
+|nginx| latest  |`N/A`|
+|supervisor| latest  |`N/A`|
 
 ### Customizing build versions
 
@@ -99,7 +104,7 @@ git clone https://github.com/laramatics/container.git
 cd app
 # Modify files...
 docker build \
-  --build-arg PHP_VERSION=8.1.1 \
+  --build-arg PHP_VERSION=8.2.1 \
   -t <image_name> .
 ```
 
@@ -143,4 +148,5 @@ GOSS_FILES_PATH=tests dgoss run -it <image_name> /bin/ash -l
 
 *Q:* How can i change php-fpm port?
 
-*A:* Sometimes you need to change default php-fpm port which is 9000 in order to serve multiple containers under same pod. to do that modify the port in `/usr/local/etc/php-fpm.d/zz-docker.conf`.
+*A:* Sometimes you need to change default php-fpm port which is 9000 in order to serve multiple containers under same
+pod. to do that modify the port in `/usr/local/etc/php-fpm.d/zz-docker.conf`.

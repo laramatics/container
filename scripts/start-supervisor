@@ -1,0 +1,5 @@
+#!/usr/bin/env ash
+
+rm -rf /etc/supervisor.d
+mv /etc/supervisor.conf /etc/supervisor.d
+exec /usr/bin/supervisord -c /etc/supervisord.conf
