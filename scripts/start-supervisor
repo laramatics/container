@@ -2,6 +2,5 @@
 
 rm -rf /etc/supervisor.d
 mv /etc/supervisor.conf /etc/supervisor.d
-supervisorctl reread
-supervisorctl update
-exec /usr/bin/supervisord -c /etc/supervisord.conf
+/usr/bin/supervisord -c /etc/supervisord.conf
+tail -f /dev/stdout
