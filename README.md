@@ -80,7 +80,7 @@ Although folder structure is self-explanatory, description is below:
 │   └── start-worker          # Running container with artisan worker role.
 │   └── start-supervisor      # Running container with supervisor role.
 └── tests
-    └── goss.yaml                   # See "testing" section.
+    └── goss.yaml             # See "testing" section.
 ```
 
 ## Packages and Services
