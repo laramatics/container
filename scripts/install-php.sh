@@ -14,7 +14,7 @@ docker-php-ext-configure opcache --enable-opcache &&
 
 # note: for some reason if we build gd,intl with the rest of the extensions it will trow an error in php -v
 docker-php-ext-install -j "$(nproc)" gd
-install-php-extensions pcntl
+docker-php-ext-install -j "$(nproc)" pcntl
 install-php-extensions redis
 install-php-extensions intl
 
