@@ -17,6 +17,7 @@ docker-php-ext-configure opcache --enable-opcache &&
 docker-php-ext-install -j "$(nproc)" gd
 install-php-extensions redis
 install-php-extensions intl
+install-php-extensions pcntl
 
 # Enable production environment
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
