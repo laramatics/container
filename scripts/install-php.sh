@@ -18,8 +18,9 @@ install-php-extensions redis
 install-php-extensions intl
 
 docker-php-ext-configure pcntl --enable-pcntl \
-  && docker-php-ext-install \
-    pcntl
+&& docker-php-ext-install pcntl \
+&& docker-php-ext-enable pcntl
+
 
 # Enable production environment
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
