@@ -9,15 +9,14 @@ docker-php-ext-configure opcache --enable-opcache &&
     pdo_mysql \
     sockets \
     bz2 \
-    pcntl \
     bcmath \
     exif
 
 # note: for some reason if we build gd,intl with the rest of the extensions it will trow an error in php -v
 docker-php-ext-install -j "$(nproc)" gd
+install-php-extensions pcntl
 install-php-extensions redis
 install-php-extensions intl
-install-php-extensions pcntl
 
 # Enable production environment
 mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
